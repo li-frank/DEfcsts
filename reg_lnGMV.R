@@ -99,7 +99,7 @@ for (vertName in slices){
   outliers <- which(abs(resids) > quantile(abs(resids),0.99))
   
   #resids.sma <- SMA(resids, 7)  
-  fileLocation <- "C:/Users/frankli/Box Sync/DEvert/Plots/Resids/"
+  fileLocation <- "Plots/"
   fileName <- paste0(vertName,"Resids.pdf") 
   pdf(file=paste0(fileLocation,fileName), onefile=TRUE) 
   plot(trainDF$date,resids, 
