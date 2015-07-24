@@ -2,23 +2,23 @@
 actual0.lim <- actual0[actual0$BIZ_FLAG == 'B2C',]
 
 ##gmv: by verticals
-vertsGMV <- ddply(actual0.lim,
+slicesGMV <- ddply(actual0.lim,
                   .(ckDate,VERTICAL),
                   summarise,gmv=sum(GMV_PLAN),
                   .progress = progress_text(char = "."))
 
-vertsGMV.bk <- vertsGMV
+slicesGMV.bk <- slicesGMV
 
-unique(vertsGMV$VERTICAL)
+unique(slicesGMV$VERTICAL)
 slices <- c("H&G","Elec","P&A","Fashion")
 
 #create individual datasets
-vertList <- NULL
+sliceList <- NULL
 for (slice in slices){
-  assign(make.names(paste0(slice,"_gmv")),vertsGMV[vertsGMV$VERTICAL==slice,c("ckDate","gmv")])
-  vertList <- append(vertList,make.names(paste0(slice,"_gmv")))
+  assign(make.names(paste0(slice,"_gmv")),slicesGMV[slicesGMV$VERTICAL==slice,c("ckDate","gmv")])
+  sliceList <- append(sliceList,make.names(paste0(slice,"_gmv")))
 }
-print(vertList)
+print(sliceList)
 
 #######################################################
 ##gmv: all verticals
