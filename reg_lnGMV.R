@@ -23,8 +23,8 @@ for (slice in slices){
   #get usable slice (no characters)
   sliceRegName <- make.names(slice)
   #filter for specific vertical
-  sliceGMV <- slicesGMV[slicesGMV$BIZ_FLAG==slice, c("ckDate","gmv")]
-  assign(paste0(sliceRegName,".gmv"), sliceGMV, env = .GlobalEnv)
+  sliceGMV <- get(paste0(slice,".gmv"))
+  #assign(paste0(sliceRegName,".gmv"), sliceGMV, env = .GlobalEnv)
   n <- nrow(sliceGMV)
   
   #   #!is this needed? dependent variable log transform: 1 for all, 1 limited for regression

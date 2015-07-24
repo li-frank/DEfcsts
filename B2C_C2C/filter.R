@@ -17,8 +17,8 @@ slices <- c("B2C","C2C")
 #create individual datasets
 sliceList <- NULL
 for (slice in slices){
-  assign(make.names(paste0(slice,"_gmv")),slicesGMV[slicesGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
-  sliceList <- append(sliceList,make.names(paste0(slice,"_gmv")))
+  assign(make.names(paste0(slice,".gmv")),slicesGMV[slicesGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
+  sliceList <- append(sliceList,make.names(paste0(slice,".gmv")))
 }
 print(sliceList)
 
