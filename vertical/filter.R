@@ -15,7 +15,7 @@ slices <- c("H&G","Elec","P&A","Fashion")
 #create individual datasets
 sliceList <- NULL
 for (slice in slices){
-  assign(make.names(paste0(slice,"_gmv")),slicesGMV[slicesGMV$VERTICAL==slice,c("ckDate","gmv")])
+  assign(make.names(paste0(slice,".gmv")),slicesGMV[slicesGMV$VERTICAL==slice,c("ckDate","gmv")])
   sliceList <- append(sliceList,make.names(paste0(slice,"_gmv")))
 }
 print(sliceList)
