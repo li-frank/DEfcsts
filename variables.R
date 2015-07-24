@@ -14,7 +14,7 @@ library(lubridate)
 #   5. add % of purchases from auctions (rolling)
 
 #define date range
-DFstart <- min(vertsGMV$ckDate)
+DFstart <- min(slicesGMV$ckDate)
 DFend <- max(actual0$ckDate) + 2*365
 DFdateRange <- data.frame(
   date=as.Date(
