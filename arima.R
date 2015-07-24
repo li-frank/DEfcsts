@@ -1,5 +1,7 @@
 library('forecast')
 
+arima.gmv <- NULL
+
 for (slice in slices){
   #get usable slice (no characters)
   sliceRegName <- make.names(slice)
@@ -12,14 +14,14 @@ for (slice in slices){
   assign(paste0(sliceRegName,".arima"), gmv.arima, env = .GlobalEnv)  
   fcst.arima <- forecast(gmv.arima)
   assign(paste0(sliceRegName,".arimaGMV"), fcst.arima, env = .GlobalEnv)
+  #save to DF
+  arima.gmv[[slice]] <- exp(fcst.arima$mean)
   
   #save under test date
   assign(paste0(sliceRegName,".arimaGMV",testStart), fcst.arima, env = .GlobalEnv)
-  
 }
 
-arima.gmv <- exp(data.frame(H.G.arimaGMV$mean, Elec.arimaGMV$mean, P.A.arimaGMV$mean, Fashion.arimaGMV$mean))
-names(arima.gmv) <- c("H&G", "Elec", "P&A", "Fashion")
+arima.gmv <- data.frame(arima.gmv)
 
 fileName <- paste0(fcstType,"/CSVexport/arimaGMV.csv")
 write.csv(arima.gmv, fileName)
