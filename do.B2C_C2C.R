@@ -4,6 +4,8 @@
 rm(list = ls())
 memory.limit()
 
+fcstType <- 'B2C_C2C'
+
 #how many days out to predict? 
 #should be >= 28 to minimize DoW effect in ARIMA 
 testDays <- 120
@@ -23,7 +25,7 @@ predict.dateRange <- seq(testStart,testEnd,by="day")
 #start0 <- proc.time()
 source("update.R")
 source("load.R")
-source("filter.B2C_C2C.R")
+source(paste0(fcstType,"/filter.R"))
 #pullTime <- proc.time()-start0; pullTime
 
 #start <- proc.time()
