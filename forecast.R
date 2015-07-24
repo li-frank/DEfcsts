@@ -45,7 +45,9 @@ for (vertName in slices){
   fcst$arima.error <- fcst$gmv.arima/fcst$gmv.actual - 1
   fcst$regArima.error <- fcst$regArima/fcst$gmv.actual - 1
   assign(paste0(vertRegName,".fcst"), fcst, env = .GlobalEnv)
-  write.csv(fcst,paste0("CSVexport/",trainEnd,"_",vertRegName,".csv"))
+  
+  fileName <- paste0(fcstType,"/CSVexport/",trainEnd,"_",vertRegName,".csv")
+  write.csv(fcst, fileName)
   
   #monthly errors
   monthError[1] <- sum(fcst$regArima[1:30])/sum(fcst$gmv.actual[1:30]) - 1
@@ -59,7 +61,9 @@ for (vertName in slices){
 
 actual.gmv <- data.frame(H.G.actual, Elec.actual, P.A.actual, Fashion.actual)
 names(actual.gmv) <- c("H&G", "Elec", "P&A", "Fashion")
-write.csv(actual.gmv, "CSVexport/actualGMV.csv")
+
+fileName <- paste0(fcstType,"/CSVexport/actualGMV.csv")
+write.csv(actual.gmv, fileName)
 
 errors <- cbind(Fashion.fcst$regArima.error, Elec.fcst$regArima.error, H.G.fcst$regArima.error, P.A.fcst$regArima.error)
 avgErrors <- rowMeans(errors)

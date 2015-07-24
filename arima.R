@@ -19,4 +19,6 @@ for (vertName in slices){
 
 arima.gmv <- exp(data.frame(H.G.arimaGMV$mean, Elec.arimaGMV$mean, P.A.arimaGMV$mean, Fashion.arimaGMV$mean))
 names(arima.gmv) <- c("H&G", "Elec", "P&A", "Fashion")
-write.csv(arima.gmv, "CSVexport/arimaGMV.csv")
+
+fileName <- paste0(fcstType,"/CSVexport/arimaGMV.csv")
+write.csv(arima.gmv, fileName)
