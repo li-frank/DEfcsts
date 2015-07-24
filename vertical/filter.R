@@ -10,13 +10,13 @@ vertsGMV <- ddply(actual0.lim,
 vertsGMV.bk <- vertsGMV
 
 unique(vertsGMV$VERTICAL)
-top4vert <- c("H&G","Elec","P&A","Fashion")
+slices <- c("H&G","Elec","P&A","Fashion")
 
 #create individual datasets
 vertList <- NULL
-for (vertName in top4vert){
-  assign(make.names(paste0(vertName,"_gmv")),vertsGMV[vertsGMV$VERTICAL==vertName,c("ckDate","gmv")])
-  vertList <- append(vertList,make.names(paste0(vertName,"_gmv")))
+for (slice in slices){
+  assign(make.names(paste0(slice,"_gmv")),vertsGMV[vertsGMV$VERTICAL==slice,c("ckDate","gmv")])
+  vertList <- append(vertList,make.names(paste0(slice,"_gmv")))
 }
 print(vertList)
 
