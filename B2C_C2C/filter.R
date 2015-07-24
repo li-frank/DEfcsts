@@ -1,24 +1,26 @@
+#B2C/C2C split
+#######################################
 #filter data
 #actual0.lim <- actual0[actual0$BIZ_FLAG == 'B2C',]
 
 ##gmv: by verticals
-vertsGMV <- ddply(actual0,
+slicesGMV <- ddply(actual0,
                   .(ckDate,BIZ_FLAG),
                   summarise,gmv=sum(GMV_PLAN),
                   .progress = progress_text(char = "."))
 
-vertsGMV.bk <- vertsGMV
+slicesGMV.bk <- slicesGMV
 
-unique(vertsGMV$BIZ_FLAG)
+unique(slicesGMV$BIZ_FLAG)
 slices <- c("B2C","C2C")
 
 #create individual datasets
-vertList <- NULL
+sliceList <- NULL
 for (slice in slices){
-  assign(make.names(paste0(slice,"_gmv")),vertsGMV[vertsGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
-  vertList <- append(vertList,make.names(paste0(slice,"_gmv")))
+  assign(make.names(paste0(slice,"_gmv")),slicesGMV[slicesGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
+  sliceList <- append(sliceList,make.names(paste0(slice,"_gmv")))
 }
-print(vertList)
+print(sliceList)
 
 #######################################################
 ##gmv: all verticals
