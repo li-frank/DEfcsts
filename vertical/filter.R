@@ -1,3 +1,5 @@
+#verticals split
+#######################################
 #filter data
 actual0.lim <- actual0[actual0$BIZ_FLAG == 'B2C',]
 
