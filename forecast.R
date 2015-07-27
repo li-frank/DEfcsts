@@ -6,14 +6,15 @@ monthError <- NULL
 monthErrors <- NULL
 quarterError <- NULL
 quarterErrors <- NULL
+actual.gmv <- NULL
 
-for (vertName in slices){
-  vertRegName <- make.names(vertName)
+for (slice in slices){
+  sliceRegName <- make.names(slice)
   #pull arimaGMV numbers
-  arimaGMV <- exp(get(paste0(vertRegName,".arimaGMV"))$mean)
+  arimaGMV <- exp(get(paste0(sliceRegName,".arimaGMV"))$mean)
   #   
   #   #pull vertical indepedent variables
-  #   fullDF <- get(paste0(vertRegName,".fullDF"))
+  #   fullDF <- get(paste0(sliceRegName,".fullDF"))
   #   
   #   ##subset to prediction period
   #   predDF <- fullDF[fullDF$date <= testEnd 
@@ -21,17 +22,18 @@ for (vertName in slices){
   #   predDF$ln_gmv <- NULL
   
   #pull vertical regression model & predict GMV
-  reg <- get(paste0(vertRegName,".reg"))
+  reg <- get(paste0(sliceRegName,".reg"))
   vertFcst <- predict(reg, newdata = predVar)
-  assign(paste0(vertRegName,".lnGMVpred"), vertFcst, env = .GlobalEnv)
+  assign(paste0(sliceRegName,".lnGMVpred"), vertFcst, env = .GlobalEnv)
   gmv.reg <- data.frame(predict.dateRange, exp(vertFcst))
   names(gmv.reg) <- c("date","gmv")
   
   #get actuals & block out prediction period to calculate GMV from %
-  actuals <- actualsAll <- get(paste0(vertRegName,".gmv"))
+  actuals <- actualsAll <- get(paste0(sliceRegName,".gmv"))
   names(actuals) <- c("date","gmv")
   gmv.actual <- actuals[which(findInterval(actuals$date, predict.dateRange)>0),] #date subset
-  assign(paste0(vertRegName,".actual"), gmv.actual[1:365,], env = .GlobalEnv)  
+  #assign(paste0(sliceRegName,".actual"), gmv.actual[1:365,], env = .GlobalEnv)  
+  actual.gmv[[sliceRegName]] <- gmv.actual[1:365,]
   #actuals$gmv[which(findInterval(actuals$date, predict.dateRange)>0)] <- NA
   
   ##create crossed forecast
@@ -44,9 +46,9 @@ for (vertName in slices){
   fcst$reg.error <- fcst$gmv.reg/fcst$gmv.actual - 1
   fcst$arima.error <- fcst$gmv.arima/fcst$gmv.actual - 1
   fcst$regArima.error <- fcst$regArima/fcst$gmv.actual - 1
-  assign(paste0(vertRegName,".fcst"), fcst, env = .GlobalEnv)
+  assign(paste0(sliceRegName,".fcst"), fcst, env = .GlobalEnv)
   
-  fileName <- paste0(fcstType,"/CSVexport/",trainEnd,"_",vertRegName,".csv")
+  fileName <- paste0(fcstType,"/CSVexport/",trainEnd,"_",sliceRegName,".csv")
   write.csv(fcst, fileName)
   
   #monthly errors
@@ -59,8 +61,9 @@ for (vertName in slices){
   quarterErrors <- rbind(quarterErrors, quarterError)
 }
 
-actual.gmv <- data.frame(H.G.actual, Elec.actual, P.A.actual, Fashion.actual)
-names(actual.gmv) <- c("H&G", "Elec", "P&A", "Fashion")
+actual.gmv <- data.frame(actual.gmv)
+#actual.gmv <- data.frame(H.G.actual, Elec.actual, P.A.actual, Fashion.actual)
+#names(actual.gmv) <- c("H&G", "Elec", "P&A", "Fashion")
 
 fileName <- paste0(fcstType,"/CSVexport/actualGMV.csv")
 write.csv(actual.gmv, fileName)

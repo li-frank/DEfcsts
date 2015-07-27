@@ -5,9 +5,9 @@
 
 ##gmv: by verticals
 slicesGMV <- ddply(actual0,
-                  .(ckDate,BIZ_FLAG),
-                  summarise,gmv=sum(GMV_PLAN),
-                  .progress = progress_text(char = "."))
+                   .(ckDate,BIZ_FLAG),
+                   summarise,gmv=sum(GMV_PLAN),
+                   .progress = progress_text(char = "."))
 
 slicesGMV.bk <- slicesGMV
 
@@ -17,7 +17,8 @@ slices <- c("B2C","C2C")
 #create individual datasets
 sliceList <- NULL
 for (slice in slices){
-  assign(make.names(paste0(slice,".gmv")),slicesGMV[slicesGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
+  assign(make.names(paste0(slice,".gmv"))
+         , slicesGMV[slicesGMV$BIZ_FLAG==slice,c("ckDate","gmv")])
   sliceList <- append(sliceList,make.names(paste0(slice,".gmv")))
 }
 print(sliceList)
