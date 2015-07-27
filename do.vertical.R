@@ -8,7 +8,7 @@ fcstType <- 'vertical'
 
 #how many days out to predict? 
 #should be >= 28 to minimize DoW effect in ARIMA 
-testDays <- 120
+testDays <- 126
 
 #set training dates (regression & arima)
 startYear <- 2010

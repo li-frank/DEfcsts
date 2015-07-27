@@ -23,7 +23,7 @@ for (slice in slices){
   #get usable slice (no characters)
   sliceRegName <- make.names(slice)
   #filter for specific vertical
-  sliceGMV <- get(paste0(slice,".gmv"))
+  sliceGMV <- get(paste0(sliceRegName,".gmv"))
   #assign(paste0(sliceRegName,".gmv"), sliceGMV, env = .GlobalEnv)
   n <- nrow(sliceGMV)
   
