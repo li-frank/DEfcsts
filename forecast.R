@@ -7,6 +7,7 @@ monthErrors <- NULL
 quarterError <- NULL
 quarterErrors <- NULL
 actual.gmv <- NULL
+regArima.error <- NULL
 
 for (slice in slices){
   sliceRegName <- make.names(slice)
@@ -46,6 +47,7 @@ for (slice in slices){
   fcst$reg.error <- fcst$gmv.reg/fcst$gmv.actual - 1
   fcst$arima.error <- fcst$gmv.arima/fcst$gmv.actual - 1
   fcst$regArima.error <- fcst$regArima/fcst$gmv.actual - 1
+  regArima.error[[sliceRegName]] <- fcst$regArima/fcst$gmv.actual - 1
   assign(paste0(sliceRegName,".fcst"), fcst, env = .GlobalEnv)
   
   fileName <- paste0(fcstType,"/CSVexport/",trainEnd,"_",sliceRegName,".csv")
@@ -68,9 +70,9 @@ actual.gmv <- data.frame(actual.gmv)
 fileName <- paste0(fcstType,"/CSVexport/actualGMV.csv")
 write.csv(actual.gmv, fileName)
 
-errors <- cbind(Fashion.fcst$regArima.error, Elec.fcst$regArima.error, H.G.fcst$regArima.error, P.A.fcst$regArima.error)
-avgErrors <- rowMeans(errors)
-absAvgErrors <- rowMeans(abs(errors))
+#errors <- cbind(Fashion.fcst$regArima.error, Elec.fcst$regArima.error, H.G.fcst$regArima.error, P.A.fcst$regArima.error)
+#avgErrors <- rowMeans(errors)
+#absAvgErrors <- rowMeans(abs(errors))
 
 # print(paste0("Average Abs Daily Vert Error: ", absAvgError))
 # print(paste0("Average Abs Daily Error: ", mean(absAvgError)))
