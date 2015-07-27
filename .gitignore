@@ -6,5 +6,7 @@ Plots/
 ProgressPPTs/
 Reference/
 frites gmv for frank.xlsx
-B2C_C2C/CSVexport/
+B2C_C2C/CSVexport/**
 actual0.RData
+vertical/CSVexport/**
+vertical/Plots/**
